@@ -50,6 +50,7 @@ class Plugin extends PluginBase
     {
         return [
             'Mberizzo\Mercadopago\Components\SubscriptionButton' => 'subscriptionButton',
+            'Mberizzo\Mercadopago\Components\IsSubscribed' => 'userIsSubscribed',
         ];
     }
 
