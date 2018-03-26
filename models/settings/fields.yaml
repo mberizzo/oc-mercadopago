@@ -1,0 +1,20 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+tabs:
+  fields:
+    subscriptions:
+      type: repeater
+      prompt: 'Add'
+      tab: 'Suscripciones'
+      form:
+        fields:
+          title:
+            label: 'Title'
+            type: text
+            span: left
+          price:
+            label: 'Price'
+            type: number
+            span: right

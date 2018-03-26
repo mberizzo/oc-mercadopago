@@ -1,6 +1,8 @@
 <?php namespace Mberizzo\Mercadopago;
 
 use Backend;
+use Mberizzo\Mercadopago\Models\Settings;
+use RainLab\User\Models\User;
 use System\Classes\PluginBase;
 
 /**
@@ -8,6 +10,9 @@ use System\Classes\PluginBase;
  */
 class Plugin extends PluginBase
 {
+
+    public $require = ['RainLab.User'];
+
     /**
      * Returns information about this plugin.
      *
@@ -16,21 +21,11 @@ class Plugin extends PluginBase
     public function pluginDetails()
     {
         return [
-            'name'        => 'Mercadopago',
-            'description' => 'No description provided yet...',
+            'name' => 'mberizzo.mercadopago::lang.plugin.name',
+            'description' => 'mberizzo.mercadopago::lang.plugin.description',
             'author'      => 'Mberizzo',
             'icon'        => 'icon-leaf'
         ];
-    }
-
-    /**
-     * Register method, called when the plugin is first registered.
-     *
-     * @return void
-     */
-    public function register()
-    {
-
     }
 
     /**
@@ -40,7 +35,9 @@ class Plugin extends PluginBase
      */
     public function boot()
     {
-
+        User::extend(function($model) {
+            $model->hasOne['subscription'] = 'Mberizzo\Mercadopago\Models\Subscription';
+        });
     }
 
     /**
@@ -50,10 +47,8 @@ class Plugin extends PluginBase
      */
     public function registerComponents()
     {
-        return []; // Remove this line to activate
-
         return [
-            'Mberizzo\Mercadopago\Components\MyComponent' => 'myComponent',
+            'Mberizzo\Mercadopago\Components\SubscriptionButton' => 'subscriptionButton',
         ];
     }
 
@@ -90,6 +85,22 @@ class Plugin extends PluginBase
                 'icon'        => 'icon-leaf',
                 'permissions' => ['mberizzo.mercadopago.*'],
                 'order'       => 500,
+            ],
+        ];
+    }
+
+    public function registerSettings()
+    {
+        return [];
+
+        return [
+            'subscription' => [
+                'label' => 'mberizzo.mercadopago::lang.plugin.name',
+                'description' => 'mberizzo.mercadopago::lang.setting_description',
+                'category' => 'system::lang.system.categories.system',
+                'icon' => 'icon-credit-card',
+                'class' => 'Mberizzo\Mercadopago\Models\Settings',
+                'permissions' => ['*'],
             ],
         ];
     }
