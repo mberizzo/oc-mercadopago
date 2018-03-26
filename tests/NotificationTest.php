@@ -1,6 +1,7 @@
 <?php namespace Mberizzo\Mercadopago\Tests;
 
 use MP;
+use RainLab\User\Models\User;
 
 class NotificationTest extends Base
 {
@@ -42,6 +43,16 @@ class NotificationTest extends Base
         ]);
     }
 
+    private function createUser()
+    {
+        return User::create([
+            'name' => 'Matias',
+            'email' => 'mail@mail.com',
+            'password' => '123456',
+            'password_confirmation' => '123456',
+        ]);
+    }
+
     /**
      * Create a valid preapproval resource
      *
@@ -51,12 +62,13 @@ class NotificationTest extends Base
     {
         // @TODO: factory is not work
         // $user = $this->factory->of(\RainLab\User\Models\User::class)->create();
+        $user = $this->createUser();
 
         $data = [
             'payer_email' => env('MP_TEST_PAYER_EMAIL'),
             'back_url' => 'https://github.com/mberizzo/oc-mercadopago',
             'reason' => 'PLAN MENSUAL',
-            'external_reference' => 1, // user_id
+            'external_reference' => $user->id, // user_id
             'auto_recurring' => [
                 'frequency' => 1,
                 'frequency_type' => 'months',
