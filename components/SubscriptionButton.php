@@ -35,6 +35,9 @@ class SubscriptionButton extends ComponentBase
             'transaction_amount' => [
                 'label' => 'Monto'
             ],
+            'back_url' => [
+                'label' => 'Back url'
+            ],
         ];
     }
 
@@ -65,7 +68,7 @@ class SubscriptionButton extends ComponentBase
 
         return [
             'payer_email' => $payerEmail,
-            'back_url' => $this->property('back_url'),
+            'back_url' => $this->property('back_url') ?? env('APP_URL'),
             'reason' => $this->property('reason'),
             'external_reference' => $this->user->id,
             'auto_recurring' => [
