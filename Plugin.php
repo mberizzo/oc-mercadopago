@@ -1,6 +1,7 @@
 <?php namespace Mberizzo\Mercadopago;
 
 use Backend;
+use Event;
 use Mberizzo\Mercadopago\Models\Settings;
 use RainLab\User\Models\User;
 use System\Classes\PluginBase;

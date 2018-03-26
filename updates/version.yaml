@@ -2,3 +2,6 @@
 1.0.2:
   - 'Create subscription table'
   - create_subscriptions_table.php
+1.0.3:
+  - 'Add is_subscribed field to users table'
+  - add_is_subscribed_field_to_users_table.php

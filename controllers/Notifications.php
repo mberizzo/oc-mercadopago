@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use MP;
 use Mberizzo\Mercadopago\Models\Subscription;
+use RainLab\User\Models\User;
 
 /**
  * Notification Back-end Controller
@@ -12,6 +13,7 @@ class Notifications extends Controller
 {
 
     public $mp;
+    public $subscription;
 
     public function __construct()
     {
@@ -19,6 +21,8 @@ class Notifications extends Controller
             env('MP_CLIENT_ID'),
             env('MP_CLIENT_SECRET')
         );
+
+        $this->subscription = new Subscription;
     }
 
     public function mercadopago(Request $request)
@@ -30,16 +34,18 @@ class Notifications extends Controller
         if ($request->topic == 'preapproval') {
             $preapproval = $this->mp->get_preapproval_payment($request->id);
 
-            // Data for search
             $data = [
                 'preapproval_id' => $request->id,
                 'user_id' => $preapproval['response']['external_reference'],
+                'status' => $preapproval['response']['status'],
             ];
 
-            // Save in db
-            $subscription = Subscription::firstOrNew($data);
-            $data['status'] = $preapproval['response']['status'];
-            $subscription->fill($data)->save();
+            $this->subscription->fill($data)->save();
+
+            // Update users.is_subscribed field
+            $user = User::find($this->subscription->user_id);
+            $user->is_subscribed = ($this->subscription->status == 'authorized') ? 1 : 0;
+            $user->save();
         }
 
         if ($request->topic == 'payment') {
