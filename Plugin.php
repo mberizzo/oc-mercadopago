@@ -2,6 +2,7 @@
 
 use Backend;
 use Mberizzo\Mercadopago\Models\Settings;
+use RainLab\User\Models\User;
 use System\Classes\PluginBase;
 
 /**
@@ -28,22 +29,15 @@ class Plugin extends PluginBase
     }
 
     /**
-     * Register method, called when the plugin is first registered.
-     *
-     * @return void
-     */
-    public function register()
-    {
-
-    }
-
-    /**
      * Boot method, called right before the request route.
      *
      * @return array
      */
     public function boot()
     {
+        User::extend(function($model) {
+            $model->hasOne['subscription'] = 'Mberizzo\Mercadopago\Models\Subscription';
+        });
     }
 
     /**

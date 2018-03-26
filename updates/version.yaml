@@ -1,1 +1,4 @@
 1.0.1: First version of Mercadopago
+1.0.2:
+  - 'Create subscription table'
+  - create_subscriptions_table.php

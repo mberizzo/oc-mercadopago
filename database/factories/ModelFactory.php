@@ -16,6 +16,5 @@ $factory->define(Rainlab\User\Models\User::class, function ($faker) {
         'name' => $faker->firstName(),
         'surname' => $faker->lastName(),
         'email' => $faker->email(),
-        'created_at' => date('Y-m-d h:m:s'),
     ];
 });

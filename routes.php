@@ -1,3 +1,3 @@
 <?php
 
-Route::get('notifications/mercadopago', ['uses' => 'Mberizzo\Mercadopago\Controllers\Notifications@mercadopago']);
+Route::post('notifications/mercadopago', ['uses' => 'Mberizzo\Mercadopago\Controllers\Notifications@mercadopago']);

@@ -57,7 +57,7 @@ class SubscriptionButton extends ComponentBase
 
     private function getData()
     {
-        $payerEmail = env('MP_PAYER_EMAIL');
+        $payerEmail = env('MP_TEST_PAYER_EMAIL');
 
         if (env('APP_ENV') == 'production') {
             $payerEmail = $this->user->email;
